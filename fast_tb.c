@@ -9,7 +9,6 @@
 #include <sys/stat.h>
 #include <math.h>
 
-// structure for passing data to threads
 typedef struct
 {
     int thread_num;
@@ -34,7 +33,6 @@ long filesize(const char *filename)
     return st.st_size;
 }
 
-// function to be executed by each thread
 void *thread_read(void *arg)
 {
     thread_data *data = (thread_data *)arg;
@@ -52,7 +50,6 @@ void *thread_read(void *arg)
 		printf("File Not Found.\r\n");
 		pthread_exit(NULL);
 	}
-    // seek to the starting position for this thread
     lseek(fd, startOffset, SEEK_SET);
     for (long i = 0; i < endOffset; i += blockSize)
     {
@@ -88,14 +85,12 @@ int main(int argc, char *argv[])
 
     long threadFileBlock=(long)fsize/numThreads;
     threadFileBlock = threadFileBlock - threadFileBlock % blockSize;
-    // create an array of threads
+
     pthread_t threads[numThreads];
 
-    // create a structure for passing data to each thread
     thread_data data[numThreads];
 
     double startT = now();
-    // create and start the threads
     for (int i = 0; i < numThreads; i++)
     {
         data[i].filename = filename;
@@ -110,7 +105,7 @@ int main(int argc, char *argv[])
         }
         data[i].blockSize=blockSize;
         data[i].threadXor=0;
-        printf("\n[%d] Start:%ld End:%ld BlockSize:%ld",data[i].thread_num,data[i].startOffset,data[i].endOffset,data[i].blockSize);
+        // printf("\n[%d] Start:%ld End:%ld BlockSize:%ld",data[i].thread_num,data[i].startOffset,data[i].endOffset,data[i].blockSize);
         pthread_create(&threads[i], NULL, thread_read, &data[i]);
     }
 
@@ -130,7 +125,7 @@ int main(int argc, char *argv[])
         fxor^=data[i].threadXor;
     }
     printf("\nXOR: %08x\n", fxor);
-    printf("Performance: %f MB/s \n\n", performance);
+    printf("BlockSize: %ld\nPerformance: %.2f MB/s \n\n",blockSize, performance);
 
     return 0;
 }
