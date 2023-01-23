@@ -30,7 +30,7 @@
  ### 6. run.c - read/write blockSize*blockCount bytes from/to a file, given a blockSize and blockCount and display read/write performance in MB/s.  
   USAGE: `./run <filename> [-r|-w] <block_size> <block_count>`  
     
- ### 7. run2.c find a fileSize that can be read in reasonable time (hardcoded) for system performance analysis for various block sizes  
+ ### 7. run2.c find a fileSize that can be read in a fixed time interval for system performance analysis for various block sizes  
   USAGE: `./run2 <filename> <block_size>`
     
  ### 8. fast.c - read a very large file in the fastest possible way, used optimal blockSize(system specific) and multithreading  
