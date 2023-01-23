@@ -7,8 +7,8 @@
   - -t [threshold]
     - Filter files based on a lower-bound threshold of > [threshold] bytes.
   - [file | directory]
-    - Run the command on a specific file, or on a different directory than where it was originally called.
-  -r
+    - Run the command on a specific file, or on a different directory than where it was originally called.  
+  - -r
     - Recursively follow all subdirectories, outputting entries for each of their files, and including an output line for each subdirectory total.
 
     USAGE: `./du -k -t <threashold_bytes> [file | directory]`
